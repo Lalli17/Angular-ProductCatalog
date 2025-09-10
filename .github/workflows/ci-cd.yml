@@ -7,14 +7,14 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest   # 👉 Ubuntu is faster & recommended
+    runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
+      # 1. Checkout repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Setup Node.js (Angular 20 requires Node 18+)
+      # 2. Setup Node.js (Angular 20+ needs Node 18+)
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,13 +24,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. Build Angular app (production mode)
+      # 4. Build Angular with correct base-href
       - name: Build Angular
-        run: npm run build -- --configuration production
+        run: npm run build -- --configuration production --base-href /Angular-ProductCatalog/
 
-      # 5. Deploy to GitHub Pages
+      # 5. Add fallback for Angular Router
+      - name: Copy index.html to 404.html
+        run: cp ./dist/product-catalog-web/index.html ./dist/product-catalog-web/404.html
+
+      # 6. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/product-catalog-web   # 👉 your Angular app's build folder
+          publish_dir: ./dist/product-catalog-web
