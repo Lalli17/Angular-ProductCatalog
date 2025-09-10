@@ -5,31 +5,36 @@ on:
     branches: [ master ]
 
 permissions:
-  id-token: write
+  id-token: write   # for Azure OIDC
   contents: read
 
 env:
-  AZURE_WEBAPP_NAME: productCatalog-webapp   # <-- your frontend app service name
-  NODE_VERSION: '20.x'
+  AZURE_WEBAPP_NAME: productCatalog-webapp   # your App Service name
+  NODE_VERSION: '20.x'                       # Angular 20 requires Node.js 20
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repo
       - uses: actions/checkout@v4
 
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
 
+      # 4. Build Angular app (prod mode)
       - name: Build Angular app
         run: npm run build -- --configuration production
 
+      # 5. Copy web.config + prepare zip
       - name: Prepare artifact
         run: |
           cp web.config dist/
@@ -37,6 +42,7 @@ jobs:
           zip -r ../app.zip .
         shell: bash
 
+      # 6. Login to Azure (OIDC)
       - name: Azure login
         uses: azure/login@v2
         with:
@@ -44,6 +50,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      # 7. Deploy to Azure App Service
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
