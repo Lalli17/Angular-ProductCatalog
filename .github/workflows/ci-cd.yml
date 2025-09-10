@@ -1,36 +1,51 @@
-name: Angular CI/CD
+name: build-and-deploy-angular
 
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_WEBAPP_NAME: productCatalog-webapp   # <-- your frontend app service name
+  NODE_VERSION: '20.x'
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest   # 👉 Ubuntu is faster & recommended
+    runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # 2. Setup Node.js (Angular 20 requires Node 18+)
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
 
-      # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4. Build Angular app (production mode)
-      - name: Build Angular
+      - name: Build Angular app
         run: npm run build -- --configuration production
 
-      # 5. Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Prepare artifact
+        run: |
+          cp web.config dist/
+          cd dist
+          zip -r ../app.zip .
+        shell: bash
+
+      - name: Azure login
+        uses: azure/login@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/product-catalog-web   # 👉 your Angular app's build folder
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: app.zip
