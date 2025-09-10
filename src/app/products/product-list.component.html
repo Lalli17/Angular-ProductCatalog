@@ -1,0 +1,25 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Products</h3>
+    <button class="btn btn-primary" (click)="add()">+ Add Product</button>
+
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info">Loading…</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <div *ngIf="!loading && products.length === 0" class="alert alert-warning">No products yet.</div>
+
+  <div class="row g-3" *ngIf="products.length">
+    <div class="col-md-4" *ngFor="let p of products">
+      <div class="card h-100">
+        <img *ngIf="p.imageUrl" [src]="p.imageUrl" class="card-img-top" style="object-fit:cover;height:180px;">
+        <div class="card-body">
+          <h5 class="card-title">{{ p.name }}</h5>
+          <p class="card-text fw-semibold">₹ {{ p.price }}</p>
+          <button class="btn btn-outline-secondary me-2" (click)="edit(p)">Edit</button>
+          <button class="btn btn-danger" (click)="remove(p)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

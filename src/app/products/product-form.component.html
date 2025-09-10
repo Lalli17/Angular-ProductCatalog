@@ -1,0 +1,28 @@
+<form class="container py-4" [formGroup]="form" (ngSubmit)="save()">
+  <h3>{{ id ? 'Edit' : 'Create' }} Product</h3>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input class="form-control" formControlName="name">
+    <div class="text-danger" *ngIf="form.controls.name.invalid && form.controls.name.touched">Required</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Price</label>
+    <input type="number" class="form-control" formControlName="price" step="0.01">
+    <div class="text-danger" *ngIf="form.controls.price.invalid && form.controls.price.touched">Must be > 0</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Image</label>
+    <input type="file" class="form-control" (change)="onFile($event)">
+    <div *ngIf="uploading" class="progress mt-2">
+      <div class="progress-bar" role="progressbar" [style.width.%]="progress">{{ progress }}%</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid || saving || uploading">{{ saving ? 'Saving…' : 'Save' }}</button>
+  <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+</form>
