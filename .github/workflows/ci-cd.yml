@@ -2,14 +2,14 @@ name: build-and-deploy-angular
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 permissions:
   id-token: write
   contents: read
 
 env:
-  AZURE_WEBAPP_NAME: ProductCatalog   # <-- updated to your real Web App name
+  AZURE_WEBAPP_NAME: ProductCatalog   # your Azure Web App name
   NODE_VERSION: '20.x'
 
 jobs:
@@ -28,13 +28,17 @@ jobs:
 
       # 3. Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # 4. Build Angular app (prod mode)
+      # 4. Run Angular tests (headless Chrome)
+      - name: Run tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      # 5. Build Angular app (prod mode)
       - name: Build Angular app
         run: npm run build -- --configuration production
 
-      # 5. Copy web.config + prepare zip
+      # 6. Copy web.config + prepare zip
       - name: Prepare artifact
         run: |
           cp web.config dist/
@@ -42,7 +46,7 @@ jobs:
           zip -r ../app.zip .
         shell: bash
 
-      # 6. Login to Azure (OIDC)
+      # 7. Login to Azure (OIDC)
       - name: Azure login
         uses: azure/login@v2
         with:
@@ -50,7 +54,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # 7. Deploy to Azure App Service
+      # 8. Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
