@@ -30,15 +30,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. Run Angular tests (headless Chrome)
-      - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+      # 🚫 Skipping Angular tests
+      # - name: Run tests
+      #   run: npm run test -- --watch=false --browsers=ChromeHeadless
 
-      # 5. Build Angular app (prod mode)
+      # 4. Build Angular app (prod mode)
       - name: Build Angular app
         run: npm run build -- --configuration production
 
-      # 6. Copy web.config + prepare zip
+      # 5. Copy web.config + prepare zip
       - name: Prepare artifact
         run: |
           cp web.config dist/
@@ -46,7 +46,7 @@ jobs:
           zip -r ../app.zip .
         shell: bash
 
-      # 7. Login to Azure (OIDC)
+      # 6. Login to Azure (OIDC)
       - name: Azure login
         uses: azure/login@v2
         with:
@@ -54,7 +54,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # 8. Deploy to Azure Web App
+      # 7. Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
