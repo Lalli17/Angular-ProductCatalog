@@ -28,7 +28,7 @@ jobs:
 
       # 3. Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # 🚫 Skipping Angular tests
       # - name: Run tests
@@ -41,9 +41,9 @@ jobs:
       # 5. Copy web.config + prepare zip
       - name: Prepare artifact
         run: |
-          cp web.config dist/
-          cd dist
-          zip -r ../app.zip .
+          cp web.config dist/ProductCatalog/
+          cd dist/ProductCatalog
+          zip -r ../../app.zip .
         shell: bash
 
       # 6. Login to Azure (OIDC)
