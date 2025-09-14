@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://localhost:7000/api'
+  apiBaseUrl: 'https://productcatalog-api.azurewebsites.net/api'
 };
 
 
