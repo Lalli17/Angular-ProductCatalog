@@ -1,0 +1,103 @@
+// Card styling
+.card {
+  border-radius: 1.25rem;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+// Headings
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2a4d8f;
+  i {
+    font-size: 1.3rem;
+    margin-right: 0.4rem;
+  }
+}
+
+// Labels
+.form-label {
+  font-weight: 600;
+  color: #344767;
+}
+
+// Inputs
+.form-control {
+  border-radius: 0.75rem;
+  border: 1px solid #d0d6e1;
+  padding: 0.65rem 0.9rem;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
+  }
+}
+
+// Input group icons
+.input-group-text {
+  border-radius: 0.75rem 0 0 0.75rem;
+  background: #f8f9fa;
+  border-right: 0;
+  color: #4a5568;
+  font-size: 1.1rem;
+}
+
+// Validation messages
+.text-danger {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+// Progress bar
+.progress {
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  .progress-bar {
+    transition: width 0.4s ease;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+// Buttons
+.btn {
+  border-radius: 0.75rem;
+  font-weight: 600;
+  padding: 0.6rem 1.3rem;
+  transition: all 0.25s ease;
+
+  &.btn-primary {
+    background: linear-gradient(90deg, #4a90e2, #357abd);
+    border: none;
+
+    &:hover {
+      background: linear-gradient(90deg, #357abd, #2a5f99);
+      transform: translateY(-2px);
+    }
+  }
+
+  &.btn-outline-secondary {
+    border: 1px solid #cfd8e3;
+    color: #555;
+
+    &:hover {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Alerts
+.alert {
+  border-radius: 0.75rem;
+  font-weight: 500;
+}

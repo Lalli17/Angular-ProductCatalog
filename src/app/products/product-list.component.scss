@@ -1,0 +1,67 @@
+// Product cards
+.product-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// Product image
+.product-img {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+// Price styling
+.price-tag {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2a5f99;
+  background: #eaf2ff;
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+}
+
+// Buttons
+.btn-sm {
+  font-weight: 500;
+  border-radius: 0.6rem;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn-outline-primary {
+  border-color: #4a90e2;
+  color: #4a90e2;
+
+  &:hover {
+    background: #4a90e2;
+    color: #fff;
+  }
+}
+
+.btn-danger {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+  border: none;
+
+  &:hover {
+    background: linear-gradient(90deg, #c0392b, #a93226);
+  }
+}
+
+// Empty state
+.empty-state {
+  color: #6c757d;
+  i {
+    opacity: 0.5;
+  }
+}
