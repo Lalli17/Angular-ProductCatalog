@@ -5,12 +5,12 @@ on:
     branches: [ master ]
 
 permissions:
-  id-token: write   # for Azure OIDC
+  id-token: write
   contents: read
 
 env:
-  AZURE_WEBAPP_NAME: productCatalog-webapp   # your App Service name
-  NODE_VERSION: '20.x'                       # Angular 20 requires Node.js 20
+  AZURE_WEBAPP_NAME: ProductCatalog   # <-- updated to your real Web App name
+  NODE_VERSION: '20.x'
 
 jobs:
   build-and-deploy:
