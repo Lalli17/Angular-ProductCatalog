@@ -1,47 +1,55 @@
-<div class="container py-5 d-flex justify-content-center">
-  <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 600px; width: 100%;">
-    <h3 class="mb-4 text-primary fw-bold text-center">
+<div class="product-form-container py-5 d-flex justify-content-center">
+  <div class="card form-card shadow-lg border-0 rounded-4 p-4 w-100">
+    <h3 class="form-title mb-4 text-center">
       <i class="bi" [ngClass]="id ? 'bi-pencil-square' : 'bi-plus-circle'"></i>
       {{ id ? 'Edit Product' : 'Create Product' }}
     </h3>
 
     <form [formGroup]="form" (ngSubmit)="save()">
 
-      <div *ngIf="error" class="alert alert-danger d-flex align-items-center">
+      <!-- Error Alert -->
+      <div *ngIf="error" class="alert alert-danger d-flex align-items-center fade-in">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
         {{ error }}
       </div>
 
-      <!-- Name -->
+      <!-- Product Name -->
       <div class="mb-3">
-        <label class="form-label fw-semibold">Product Name</label>
+        <label class="form-label">Product Name</label>
         <div class="input-group">
-          <span class="input-group-text bg-light"><i class="bi bi-box"></i></span>
+          <span class="input-group-text"><i class="bi bi-box"></i></span>
           <input class="form-control" formControlName="name" placeholder="Enter product name">
         </div>
-        <small class="text-danger" *ngIf="form.controls.name.invalid && form.controls.name.touched">
+        <div class="invalid-feedback d-block" *ngIf="form.controls.name.invalid && form.controls.name.touched">
           Required
-        </small>
+        </div>
       </div>
 
       <!-- Price -->
       <div class="mb-3">
-        <label class="form-label fw-semibold">Price</label>
+        <label class="form-label">Price</label>
         <div class="input-group">
-          <span class="input-group-text bg-light"><i class="bi bi-currency-dollar"></i></span>
+          <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
           <input type="number" class="form-control" formControlName="price" step="0.01" placeholder="Enter price">
         </div>
-        <small class="text-danger" *ngIf="form.controls.price.invalid && form.controls.price.touched">
+        <div class="invalid-feedback d-block" *ngIf="form.controls.price.invalid && form.controls.price.touched">
           Must be greater than 0
-        </small>
+        </div>
       </div>
 
       <!-- Image Upload -->
       <div class="mb-3">
-        <label class="form-label fw-semibold">Product Image</label>
-        <input type="file" class="form-control" (change)="onFile($event)">
-        <div *ngIf="uploading" class="progress mt-3" style="height: 10px;">
-          <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+        <label class="form-label">Product Image</label>
+        <input type="file" class="form-control file-input" (change)="onFile($event)">
+        
+        <!-- Preview -->
+        <div *ngIf="preview" class="preview-box mt-3">
+          <img [src]="preview" alt="Preview" class="img-fluid rounded shadow-sm" />
+        </div>
+
+        <!-- Upload Progress -->
+        <div *ngIf="uploading" class="progress mt-3">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                role="progressbar" [style.width.%]="progress">
             {{ progress }}%
           </div>
@@ -49,11 +57,11 @@
       </div>
 
       <!-- Buttons -->
-      <div class="d-flex justify-content-end mt-4">
-        <button type="button" class="btn btn-outline-secondary me-2" (click)="cancel()">
+      <div class="d-flex justify-content-end mt-4 gap-2">
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
           <i class="bi bi-x-circle me-1"></i> Cancel
         </button>
-        <button type="submit" class="btn btn-primary px-4" 
+        <button type="submit" class="btn btn-primary px-4"
                 [disabled]="form.invalid || saving || uploading">
           <i class="bi bi-save me-1"></i>
           {{ saving ? 'Saving…' : 'Save' }}
