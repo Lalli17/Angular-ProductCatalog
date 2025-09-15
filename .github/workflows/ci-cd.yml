@@ -41,10 +41,9 @@ jobs:
       # 5. Copy web.config + prepare zip
       - name: Prepare artifact
         run: |
-          cp web.config dist/
-          cd dist
-          zip -r ../app.zip .
-
+          cp web.config dist/product-catalog-web/browser/
+          cd dist/product-catalog-web/browser
+          zip -r ../../../app.zip .
 
       # 6. Login to Azure (OIDC)
       - name: Azure login
