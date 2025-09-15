@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="products-container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h3 class="fw-bold text-primary">Products</h3>
     <button class="btn btn-primary d-flex align-items-center" (click)="add()">
@@ -15,6 +15,7 @@
     <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
   </div>
 
+  <!-- Empty state -->
   <div *ngIf="!loading && products.length === 0" class="empty-state text-center py-5">
     <i class="bi bi-box-seam display-4 text-muted"></i>
     <p class="mt-3 text-muted">No products yet. Click <strong>Add Product</strong> to create one.</p>
@@ -22,17 +23,23 @@
 
   <!-- Product grid -->
   <div class="row g-4" *ngIf="products.length">
-    <div class="col-md-4" *ngFor="let p of products">
-      <div class="card product-card h-100 shadow-sm">
-        <img *ngIf="p.imageUrl" [src]="p.imageUrl" class="card-img-top product-img">
+    <div class="col-md-4 col-sm-6" *ngFor="let p of products">
+      <div class="card product-card shadow-sm h-100">
+        
+        <!-- Image container (fixed height, image scaled without crop) -->
+        <div class="product-img-wrapper">
+          <img *ngIf="p.imageUrl" [src]="p.imageUrl" class="product-img" alt="{{ p.name }}">
+        </div>
+
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title fw-bold">{{ p.name }}</h5>
+          <h5 class="card-title fw-bold text-truncate" title="{{ p.name }}">{{ p.name }}</h5>
           <p class="price-tag mb-3">₹ {{ p.price }}</p>
-          <div class="mt-auto">
-            <button class="btn btn-sm btn-outline-primary me-2" (click)="edit(p)">
+
+          <div class="mt-auto d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary flex-fill" (click)="edit(p)">
               <i class="bi bi-pencil-square me-1"></i> Edit
             </button>
-            <button class="btn btn-sm btn-danger" (click)="remove(p)">
+            <button class="btn btn-sm btn-danger flex-fill" (click)="remove(p)">
               <i class="bi bi-trash me-1"></i> Delete
             </button>
           </div>
