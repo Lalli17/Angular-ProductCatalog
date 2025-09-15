@@ -1,82 +1,67 @@
-$primary-color: #4e73df;
-$danger-color: #e74a3b;
-$muted-color: #6c757d;
-$card-bg: #ffffff;
-
-.products-container {
-  background-color: #f8f9fc;
-  min-height: 100vh;
-}
-
+// Product cards
 .product-card {
-  border: none;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  }
-
-  .card-body {
-    padding: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
   }
 }
 
-.product-img-wrapper {
-  height: 220px; // fixed height so all cards align
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f1f3f8;
-
-  img.product-img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain; // ensures no cropping, only scaling
-  }
+// Product image
+.product-img {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
 }
 
-.card-title {
-  font-size: 1.1rem;
-  color: #333;
-}
-
+// Price styling
 .price-tag {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: $primary-color;
-  font-size: 1rem;
-}
-
-.btn {
+  color: #2a5f99;
+  background: #eaf2ff;
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
   border-radius: 0.5rem;
+}
+
+// Buttons
+.btn-sm {
   font-weight: 500;
+  border-radius: 0.6rem;
+  transition: transform 0.2s;
 
-  &.btn-outline-primary {
-    color: $primary-color;
-    border-color: $primary-color;
-
-    &:hover {
-      background-color: $primary-color;
-      color: white;
-    }
-  }
-
-  &.btn-danger {
-    background-color: $danger-color;
-    border: none;
-
-    &:hover {
-      background-color: darken($danger-color, 7%);
-    }
+  &:hover {
+    transform: translateY(-2px);
   }
 }
 
-.empty-state {
-  color: $muted-color;
+.btn-outline-primary {
+  border-color: #4a90e2;
+  color: #4a90e2;
 
+  &:hover {
+    background: #4a90e2;
+    color: #fff;
+  }
+}
+
+.btn-danger {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+  border: none;
+
+  &:hover {
+    background: linear-gradient(90deg, #c0392b, #a93226);
+  }
+}
+
+// Empty state
+.empty-state {
+  color: #6c757d;
   i {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 }
